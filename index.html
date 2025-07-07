@@ -23,24 +23,26 @@
     <div class="row mx-auto w-75 mt-3 ">
         <!-- logo variable en fonction de la météo -->
         <div class="col-4">
-            <div class="d-flex align-items-center  fw-bold justify-content-center bg-light bg-opacity-50
-                 rounded-pill">
-                <i class=" fs-1 " id="icon"></i>
+            <div class="d-flex align-items-center justify-content-center bg-light bg-opacity-50 rounded-pill border border-primary-subtle">
+                <i class=" " id="icon"></i>
             </div>
-
-            <p class=" text-center w-100 bg-light bg-opacity-50
-             px-3 rounded text-truncate" id="description"></p>
-            <!-- </div> -->
         </div>
-        <!-- température -->
         <div class="col-4 ms-auto">
-            <div class="d-flex align-items-center justify-content-center ">
-                <p class="fw-bold  fs-4 px-2 py-1 bg-light bg-opacity-50
-                 rounded-pill" id="temp"></p>
-            </div>
+            <p class=" text-center w-100 bg-light bg-opacity-50
+             px-3 rounded border border-primary-subtle" id="description"></p>
         </div>
-        <!-- fin du row -->
     </div>
+    <!-- </div> -->
+
+    <!-- température -->
+
+    <div class="d-flex align-items-center justify-content-center mx-auto">
+        <p class="fw-bold  fs-4 px-2 py-1 bg-light bg-opacity-50
+                 rounded-pill border border-primary-subtle" id="temp"></p>
+    </div>
+
+    <!-- fin du row -->
+    <!-- </div> -->
 
     <!-- huge gap +/- 35% screen -->
     <div class="vh-gap"></div>
@@ -50,11 +52,11 @@
     <!-- ville actuelle / choisir une autre ville -->
     <div class="d-flex justify-content-center my-3">
         <input type="text" id="city-input" placeholder="ville" class="form-control mx-auto text-center  fw-bold w-50 bg-light bg-opacity-50
-             rounded-pill">
+             rounded-pill border border-primary-subtle">
     </div>
     <div class="d-flex justify-content-center my-3">
         <button class="btn mx-auto bg-light fw-bold bg-light bg-opacity-50
-         rounded-pill" onclick="weatherApp()">
+         rounded-pill border border-primary-subtle" onclick="weatherApp()">
             météo
         </button>
 
@@ -64,46 +66,49 @@
 
     <div class="d-flex justify-content-between mx-auto  align-items-center w-75 my-4 ">
         <!-- precipitation -->
-        <div class="text-center  fw-bold  blockD  ">
-            <p class="align-middle bg-light bg-opacity-50
-             rounded-pill" id="precip"></p>
+        <div class="text-center blockD  bg-light bg-opacity-50
+             rounded border border-primary-subtle">
+            <p>Précipitation:</p>
+            <p class="align-middle fw-bold " id="precip"></p>
         </div>
         <!-- humidité -->
-        <div class=" text-center  fw-bold blockD  ">
-            <p class="align-middle bg-light bg-opacity-50
-             rounded-pill" id="humid"></p>
+        <div class=" text-center blockD bg-light bg-opacity-50
+             rounded border border-primary-subtle">
+            <p>Humidité:</p>
+            <p class="align-middle fw-bold  " id="humid"></p>
         </div>
         <!-- vent -->
-        <div class="text-center  fw-bold blockD  ">
-            <p class="bg-light bg-opacity-50
-             rounded-pill " id="vent"></p>
+        <div class="text-center blockD bg-light bg-opacity-50
+             rounded border border-primary-subtle">
+            <p>Vent:</p>
+            <p class="align-middle  fw-bold " id="vent"></p>
         </div>
         <!-- fin du row -->
     </div>
 
     <!-- carousel de sélection du jours -->
+
     <div class=" row my-4 w-75 mx-auto ">
+
         <div class="col-3">
-            <div class="bg-light bg-opacity-50
-              fw-bold rounded px-3 py-2 text-center">
-                <p class="mb-1" id="icon+1"></p>
-                <p class="mb-1" id="temp+1"></p>
+            <div class="bg-light bg-opacity-50 fw-bold rounded px-3 py-2 border border-primary-subtle">
                 <p class="mb-0" id="time+1"></p>
+                <p class="mb-1" id="icon+1"></p>
+                <p class="mb-1" id="temp+1"></p>   
             </div>
         </div>
 
         <div class="col-3">
-            <div class="bg-light bg-opacity-50
-              fw-bold rounded px-3 py-2 text-center">
-                <p class="mb-1" id="icon+2"></p>
-                <p class="mb-1" id="temp+2"></p>
+            <div class="bg-light bg-opacity-50 fw-bold rounded px-3 py-2 border border-primary-subtle">
                 <p class="mb-0" id="time+2"></p>
+                <p class="mb-1" id="icon+2"></p>
+                <p class="mb-1" id="temp+2"></p>               
             </div>
         </div>
 
         <div class="col-3">
             <div class="bg-light bg-opacity-50
-              fw-bold rounded px-3 py-2 text-center">
+              fw-bold rounded px-3 py-2 text-center border border-primary-subtle">
                 <p class="mb-1" id="iconDay+1"></p>
                 <p class="mb-1" id="tempDay+1"></p>
                 <p class="mb-0" id="timeDay+1"></p>
@@ -112,7 +117,7 @@
 
         <div class="col-3">
             <div class="bg-light bg-opacity-50
-              fw-bold rounded px-3 py-2 text-center">
+              fw-bold rounded px-3 py-2 text-center border border-primary-subtle">
                 <p class="mb-1" id="iconDay+2"></p>
                 <p class="mb-1" id="tempDay+2"></p>
                 <p class="mb-0" id="timeDay+2"></p>
@@ -122,27 +127,27 @@
     </div>
     <!-- soleil et heure -->
     <div class="row w-75 mx-auto ">
-        <div class="col-5">
+        <div class="col-6">
             <div class="d-flex justify-content-between bg-light bg-opacity-50
-             rounded-pill px-3 py-2 mb-1">
+             rounded-pill px-3 py-2 mb-1 border border-primary-subtle">
                 <p class=" fw-bold m-0 d-flex align-items-center">
-                    <i class="bi bi-sunrise me-1"></i>
-                    <span id="sunrise"></span>
+                    <i class="fs-2 bi bi-sunrise me-1"></i>
+                    <span class="ms-auto" id="sunrise"></span>
                 </p>
             </div>
 
             <div class="d-flex justify-content-between bg-light bg-opacity-50
-             rounded-pill px-3 py-2">
+             rounded-pill border border-primary-subtle px-3 py-2">
                 <p class=" fw-bold m-0 d-flex align-items-center">
-                    <i class="bi bi-sunset me-1"></i>
-                    <span id="sunset"></span>
+                    <i class="fs-2 bi bi-sunset me-1"></i>
+                    <span class="ms-auto" id="sunset"></span>
                 </p>
             </div>
         </div>
         <div class="col-3   ms-auto pe-5 ">
             <div class="d-flex align-items-center justify-content-center h-100">
                 <p class="fw-bold  fs-3 py-1 px-2 bg-light bg-opacity-50
-                 rounded-pill" id="clock"></p>
+                 rounded-pill border border-primary-subtle" id="clock"></p>
             </div>
         </div>
         <!-- fin de row  -->

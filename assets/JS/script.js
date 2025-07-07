@@ -23,17 +23,18 @@ function weatherApp() {
             document.getElementById("vent").innerHTML = `${data.list[0].wind.speed} Km/H`
             document.getElementById("description").innerHTML = `${data.list[0].weather[0].description}`
             // document.getElementById("loc").innerHTML = `${data.city.name}`
-            document.getElementById("icon").className = `owi owi-${data.list[0].weather[0].icon}`
+            document.getElementById("icon").className = `owi owi-${data.list[0].weather[0].icon} fs-1 fw-bold`
 
             //cards for next hours
-            document.getElementById("temp+1").innerHTML = `${Math.round(data.list[1].main.temp)}°C`
-            document.getElementById("icon+1").className = `owi owi-${data.list[1].weather[0].icon}`
             document.getElementById("time+1").innerHTML = `${new Date(data.list[1].dt * 1000).getHours().toString().padStart(2, "0")}h`;
-
+            document.getElementById("temp+1").innerHTML = `${Math.round(data.list[1].main.temp)}°c`;
+            document.getElementById("icon+1").innerHTML = `<i class="owi owi-${data.list[1].weather[0].icon} fs-2"></i>`;
             
-            document.getElementById("temp+2").innerHTML = `${Math.round(data.list[2].main.temp)}°C`;
-            document.getElementById("icon+2").innerHTML = `<i class="owi owi-${data.list[2].weather[0].icon} fs-2"></i>`;
+
             document.getElementById("time+2").innerHTML = `${new Date(data.list[2].dt * 1000).getHours().toString().padStart(2, "0")}h`;
+            document.getElementById("temp+2").innerHTML = `${Math.round(data.list[2].main.temp)}°c`;
+            document.getElementById("icon+2").innerHTML = `<i class="owi owi-${data.list[2].weather[0].icon} fs-2"></i>`;
+            
 
 
 
@@ -68,8 +69,8 @@ function weatherApp() {
 
 function updateClock() {
     //pull the time from the device with "Date()"
-    const now = new Date();
-    const formattedTime = now.toLocaleTimeString([], {
+    let now = new Date();
+    let formattedTime = now.toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
         // 24h format
@@ -77,7 +78,7 @@ function updateClock() {
     });
 
     //loop for updating real time
-    const clockElement = document.getElementById("clock");
+    let clockElement = document.getElementById("clock");
     if (clockElement.textContent !== formattedTime) {
         clockElement.textContent = formattedTime;
     }
