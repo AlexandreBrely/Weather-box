@@ -1,0 +1,13 @@
+.vh-gap {
+    height: 35vh;
+}
+.blockD {
+    height:5vh;
+    width: 20vw;
+}
+body {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+ 
+}
