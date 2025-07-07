@@ -26,7 +26,7 @@ function weatherApp() {
             document.getElementById("icon").className = `owi owi-${data.list[0].weather[0].icon}`
 
             //cards for next hours
-            document.getElementById("temp+1").innerHTML = `${Math.round(data.list[1].main.temp)}°c`
+            document.getElementById("temp+1").innerHTML = `${Math.round(data.list[1].main.temp)}°C`
             document.getElementById("icon+1").className = `owi owi-${data.list[1].weather[0].icon}`
             document.getElementById("time+1").innerHTML = `${new Date(data.list[1].dt * 1000).getHours().toString().padStart(2, "0")}h`;
 
