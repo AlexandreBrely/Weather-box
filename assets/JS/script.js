@@ -1,7 +1,7 @@
-document.body.style.backgroundImage = "url('assets/IMG/basic.jpeg')";
+document.body.style.backgroundImage = "url('assets/IMG/night.jpeg')";
 
 function weatherApp() {
-    let input = document.getElementById("city-input").value.trim();
+    let input = document.getElementById("city-input").value.trim(); 
     let city = input.replace(/\s+/g, "-");
     if (!city) return;
 
