@@ -1,11 +1,45 @@
 document.body.style.backgroundImage = "url('assets/IMG/night.jpeg')";
 
+navigator.geolocation.getCurrentPosition(
+    position => {
+        let lat = position.coords.latitude;
+        let lon = position.coords.longitude;
+
+        // Call your reverse geocoding API here
+        getCityName(lat, lon);
+    },
+    error => {
+        console.error("position non trouver:", error);
+    }
+);
+let apiKey = '7c6f1c4d03343b679304dbb6beea9e6c'
+
+function getCityName(lat, lon) {
+  let limit = 1;
+  let url = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=${limit}&appid=${apiKey}`;
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      if (data && data.length > 0) {
+        let city = data[0].name;
+        console.log("ville geolocalisée:", city);
+        document.getElementById("city-input").value = city;
+        weatherApp(city);
+      } else {
+        console.warn("Aucune ville trouvée.");
+      }
+    })
+    .catch(err => console.error("Erreur API géolocalisation :", err));
+}
+
+
 function weatherApp() {
-    let input = document.getElementById("city-input").value.trim(); 
+    let input = document.getElementById("city-input").value.trim();
     let city = input.replace(/\s+/g, "-");
     if (!city) return;
 
-    let apiKey = '7c6f1c4d03343b679304dbb6beea9e6c'
+
 
     let url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric&lang=fr`
 
@@ -14,7 +48,7 @@ function weatherApp() {
         .then(data => {
             console.log(data);
             if (data.cod !== "200") {
-                alert("ville non-valide");
+                alert("Aucune ville trouvée");
                 return;
             }
             document.getElementById("temp").innerHTML = `${Math.round(data.list[0].main.temp)}°c`
@@ -29,12 +63,12 @@ function weatherApp() {
             document.getElementById("time+1").innerHTML = `${new Date(data.list[1].dt * 1000).getHours().toString().padStart(2, "0")}h`;
             document.getElementById("temp+1").innerHTML = `${Math.round(data.list[1].main.temp)}°c`;
             document.getElementById("icon+1").innerHTML = `<i class="owi owi-${data.list[1].weather[0].icon} fs-2"></i>`;
-            
+
 
             document.getElementById("time+2").innerHTML = `${new Date(data.list[2].dt * 1000).getHours().toString().padStart(2, "0")}h`;
             document.getElementById("temp+2").innerHTML = `${Math.round(data.list[2].main.temp)}°c`;
             document.getElementById("icon+2").innerHTML = `<i class="owi owi-${data.list[2].weather[0].icon} fs-2"></i>`;
-            
+
 
 
 
