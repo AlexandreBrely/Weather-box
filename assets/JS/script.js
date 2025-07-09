@@ -5,7 +5,7 @@ navigator.geolocation.getCurrentPosition(
         let lat = position.coords.latitude;
         let lon = position.coords.longitude;
 
-        // Call your reverse geocoding API here
+        // function d'apres
         getCityName(lat, lon);
     },
     error => {
@@ -15,22 +15,22 @@ navigator.geolocation.getCurrentPosition(
 let apiKey = '7c6f1c4d03343b679304dbb6beea9e6c'
 
 function getCityName(lat, lon) {
-  let limit = 1;
-  let url = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=${limit}&appid=${apiKey}`;
+    let limit = 1;
+    let url = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=${limit}&appid=${apiKey}`;
 
-  fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      if (data && data.length > 0) {
-        let city = data[0].name;
-        console.log("ville geolocalisée:", city);
-        document.getElementById("city-input").value = city;
-        weatherApp(city);
-      } else {
-        console.warn("Aucune ville trouvée.");
-      }
-    })
-    .catch(err => console.error("Erreur API géolocalisation :", err));
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                let city = data[0].name;
+                console.log("ville geolocalisée:", city);
+                document.getElementById("city-input").value = city;
+                weatherApp(city);
+            } else {
+                console.warn("Aucune ville trouvée.");
+            }
+        })
+        .catch(err => console.error("Erreur API géolocalisation :", err));
 }
 
 
@@ -68,6 +68,70 @@ function weatherApp() {
             document.getElementById("time+2").innerHTML = `${new Date(data.list[2].dt * 1000).getHours().toString().padStart(2, "0")}h`;
             document.getElementById("temp+2").innerHTML = `${Math.round(data.list[2].main.temp)}°c`;
             document.getElementById("icon+2").innerHTML = `<i class="owi owi-${data.list[2].weather[0].icon} fs-2"></i>`;
+
+
+
+
+            let dayTwo = new Date();
+            let tomorrow = new Date(dayTwo);
+            tomorrow.setDate(dayTwo.getDate() + 1);
+
+            // Format tomorrow's date for comparison
+            let tomorrowString = tomorrow.toLocaleDateString("fr-FR");
+
+            // Loop through forecast entries to find tomorrow at 12:00
+            let middayForecast = null;
+
+            for (let i = 0; i < data.list.length; i++) {
+                let forecastDate = new Date(data.list[i].dt * 1000);
+                let forecastDateString = forecastDate.toLocaleDateString("fr-FR");
+                let forecastHour = forecastDate.getHours();
+
+                if (forecastDateString == tomorrowString && forecastHour >= 11 && forecastHour <= 13) {
+                    middayForecast = data.list[i];
+                    break;
+                }
+            }
+
+            if (middayForecast) {
+                document.getElementById("iconDay+1").innerHTML = `<i class="owi owi-${middayForecast.weather[0].icon} fs-2"></i>`;
+                document.getElementById("tempDay+1").innerHTML = `${Math.round(middayForecast.main.temp)}°C`;
+                document.getElementById("timeDay+1").innerHTML = new Date(middayForecast.dt * 1000).toLocaleDateString("fr-FR", {
+                    weekday: "long",
+                });
+            }
+
+            //  Set target date: day after tomorrow
+            let dayThree = new Date();
+            let dayAfter = new Date(dayThree);
+            dayAfter.setDate(dayThree.getDate() + 2);
+
+            //  Format for easy comparison
+            let dayAfterString = dayAfter.toLocaleDateString("fr-FR");
+
+            //  Find midday-ish forecast (between 11h and 13h)
+            let middayForecast2 = null;
+
+            for (let i = 0; i < data.list.length; i++) {
+                let forecastDate = new Date(data.list[i].dt * 1000);
+                let forecastDateString = forecastDate.toLocaleDateString("fr-FR");
+                let forecastHour = forecastDate.getHours();
+
+                if (forecastDateString === dayAfterString && forecastHour >= 11 && forecastHour <= 13) {
+                    middayForecast2 = data.list[i];
+                    break;
+                }
+            }
+
+            if (middayForecast2) {
+                let rawDay = new Date(middayForecast2.dt * 1000).toLocaleDateString("fr-FR", { weekday: "long" });
+                let capitalizedDay = rawDay.charAt(0).toUpperCase() + rawDay.slice(1);
+                document.getElementById("tempDay+2").innerHTML = `${Math.round(middayForecast2.main.temp)}°C`;
+                document.getElementById("iconDay+2").innerHTML = `<i class="owi owi-${middayForecast2.weather[0].icon} fs-2"></i>`;
+                document.getElementById("timeDay+2").innerHTML = new Date(middayForecast2.dt * 1000).toLocaleDateString("fr-FR", {
+                    weekday: "long",
+                });
+            }
 
 
 
