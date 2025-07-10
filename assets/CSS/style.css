@@ -1,19 +1,16 @@
 .vh-gap {
   height: 35vh;
 }
-
 .blockD {
   height: 10vh;
   width: 20vw;
   font-size: small;
   font-family: 'Bebas Neue', cursive;
 }
-
 .blockF {
   font-size: small;
   font-family: 'Bebas Neue', cursive;
 }
-
 body {
   height: 100%;
   background-size: cover;
@@ -21,7 +18,6 @@ body {
   background-position: center center;
   font-family: 'poppins' sans-serif;
 }
-
 #temp,
 #clock {
   font-family: 'Bebas Neue', cursive;
