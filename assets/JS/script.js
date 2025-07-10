@@ -4,6 +4,8 @@ navigator.geolocation.getCurrentPosition(
     position => {
         let lat = position.coords.latitude;
         let lon = position.coords.longitude;
+        console.log(lat)
+        console.log(lon)
 
         // function d'apres
         getCityName(lat, lon);
@@ -15,8 +17,8 @@ navigator.geolocation.getCurrentPosition(
 let apiKey = '7c6f1c4d03343b679304dbb6beea9e6c'
 
 function getCityName(lat, lon) {
-    let limit = 1;
-    let url = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=${limit}&appid=${apiKey}`;
+    let limit = 5;
+    let url = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=${limit}&appid=${apiKey}&units=metric&lang=fr`;
 
     fetch(url)
         .then(res => res.json())
