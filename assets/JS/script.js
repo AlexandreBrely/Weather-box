@@ -2,6 +2,7 @@ document.body.style.backgroundImage = "url('assets/IMG/night.jpeg')";
 
 let apiKey = '7c6f1c4d03343b679304dbb6beea9e6c'
 
+//geo loc via navigateur --
 navigator.geolocation.getCurrentPosition(
     position => {
         let lat = position.coords.latitude;
@@ -18,7 +19,7 @@ navigator.geolocation.getCurrentPosition(
     }
 );
 
-
+//function geo / api
 function geoLoc(lat, lon) {
     let limit = 1;
     let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&limit=${limit}&appid=${apiKey}&units=metric&lang=fr`;
@@ -27,33 +28,23 @@ function geoLoc(lat, lon) {
         .then(response => response.json())
         .then(data => {
             console.log(data)
+
             infoWeather(data);
+
             document.getElementById("city-input").value = `${data.city.name}`;
-            //         if (data.cod !== "200") {
-            //             console.warn("Aucune ville trouvée.");;
-            //             return;
-            //         }
-            //         infoWeather(data)
-
-            //     });
-            // };
+         
             if (data && data.length > 0) {
-                // let city = data[0].name;
-                // console.log("ville geolocalisée:", city);
-                // document.getElementById("city-input").value = city;
-
+       
             }
-            // else {
-            //     console.warn("Aucune ville trouvée.");
-            // }
-
-
+        
         })
         .catch(err => console.error("Erreur API géolocalisation :", err));
+    updateFavIcon()
 }
 
-
+//function par input ville
 function weatherApp() {
+   
     let input = document.getElementById("city-input").value.trim();
     let city = input.replace(/\s+/g, "-");
     if (!city) return;
@@ -72,6 +63,7 @@ function weatherApp() {
         });
 }
 
+//display des infos de l'api
 function infoWeather(data) {
     document.getElementById("temp").innerHTML = `${Math.round(data.list[0].main.temp)}°c`
     document.getElementById("precip").innerHTML = `${data.list[0].pop}%`
@@ -178,27 +170,125 @@ function infoWeather(data) {
     //background img changing with icons
     let bgImg = data.list[0].weather[0].icon;
     document.body.style.backgroundImage = `url('assets/IMG/${bgImg}.jpeg')`;
+    updateFavIcon()
+}
+
+
+//-------------------------------------------------------------------------------------------
+// favorite city  add/delete and update icon
+
+const addFav = () => {
+    //safety console.log right target
+    console.log(document.getElementById("city-input").value);
+    //create a var from the input
+    let citySearched = document.getElementById("city-input").value.trim();
+    //check for the list OR create it
+    let list = JSON.parse(localStorage.getItem('list',)) || [];
+    //push the city into the list if not already there
+    if (!list.includes(citySearched)) {
+        list.push(citySearched);
+        localStorage.setItem("list", JSON.stringify(list));
+    }
+    console.log(list);
+
+    //update display 
+    displayFavCities();
+    updateFavIcon();
+}
+
+function deleteFav(i) {
+    //target the [] in localStorage
+    let list = JSON.parse(localStorage.getItem("list")) || [];
+    // delete/splice the element at index "i"
+    list.splice(i, 1);
+    //save the new []
+    localStorage.setItem("list", JSON.stringify(list));
+    // update the display of the list
+    displayFavCities();
+    updateFavIcon();
+
+}
+function updateFavIcon() {
+    const cityInput = document.getElementById("city-input").value.trim();
+    const list = JSON.parse(localStorage.getItem("list")) || [];
+    const favIcon = document.getElementById("favIcon");
+
+    favIcon.className = list.includes(cityInput) ? "bi bi-star-fill" : "bi bi-star";
+}
+
+updateFavIcon()
 
 
 
+
+
+//------------------------------------------------------------------------
+//Favorite city within the OffCanvas
+const displayFavCities = () => {
+    //target the list OR create it (safety measure)
+    const cityList = JSON.parse(localStorage.getItem("list")) || [];
+    //target the place to display in the offCanvas
+    const favCityList = document.getElementById("favoredCity");
+    //safety to not display the list twices
+    favCityList.innerHTML = "";
+    //set up an incrementation for each "favoredcity" and make it targetable in the array    
+    let i = 0;
+    cityList.forEach(city => {
+
+        favCityList.innerHTML += `
+            <li class="list-group-item bg-dark text-white border-0">
+                <div onclick="searchFavCity('${city}')" class="d-flex justify-content-between align-items-center">
+                    <i class="bi bi-geo-alt-fill me-2 text-warning"></i>  ${city} <button class="btn text-white" id="deleteFav"
+                        onclick="deleteFav(${i})"><i class="bi bi-trash"> </i> </button>
+                </div>
+            </li>      
+          `
+        //end of the loop + 1          
+        i = + 1
+    });
+};
+
+displayFavCities();
+
+
+
+
+
+
+//----------------------------------------------------------------
+// clickable favorite city = display of the city
+function searchFavCity(city) {
+   
+  
+    if (!city) return;
+
+    let url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric&lang=fr`
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (data.cod !== "200") {
+                console.warn("Aucune ville trouvée.");;
+                return;
+            }
+            infoWeather(data)
+
+            document.getElementById("city-input").value = `${data.city.name}`
+        });
 }
 
 
 
-
-
-
-
-//         });
-// }
-
+//--------------------------------------------------------------
+//CLOCK
 function updateClock() {
     //pull the time from the device with "Date()"
     let now = new Date();
     let formattedTime = now.toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
-        second: '2-digit',
+        // second: '2-digit',
         // 24h format
         hour12: false
     });
@@ -214,15 +304,3 @@ function updateClock() {
 
 //  Start the loop
 updateClock();
-
-// document.getElementById("").innerHTML = `${data.list}`
-
-
-//   let unix_timestamp_sunrise = data.city.sunrise
-// //    console.log(unix_timestamp_sunrise)
-// let timerise = new Date(unix_timestamp_sunrise * 1000)
-// let hours = timerise.getHours();
-// let minutes = timerise.getMinutes();
-// minutes = minutes.toString().padStart(2,"0")
-// let sunrise = ` ${hours} : ${minutes} `
-// console.log(sunrise)

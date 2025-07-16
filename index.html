@@ -27,12 +27,12 @@
         <!-- logo variable en fonction de la météo -->
         <div class="col-3">
             <div
-                class="d-flex align-items-center justify-content-center bg-light bg-opacity-50 rounded-pill border border-primary-subtle">
+                class="d-flex align-items-center justify-content-center bg-dark text-white bg-opacity-50 rounded-pill border border-primary-subtle">
                 <i class=" " id="icon"></i>
             </div>
         </div>
         <div class="col-6 ms-auto">
-            <p class=" text-center fw-bold w-100 bg-light bg-opacity-50
+            <p class=" text-center fw-bold w-100 bg-dark text-white bg-opacity-50
              px-3 py-2 rounded border border-primary-subtle" id="description"></p>
         </div>
     </div>
@@ -40,8 +40,13 @@
 
     <!-- température -->
 
+    <button class="btn ms-3 bg-dark text-white bg-opacity-50 rounded-pill border border-primary-subtle" type="button"
+        data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <i class="bi bi-gear-fill"></i>
+    </button>
+
     <div class="d-flex align-items-center justify-content-center mx-auto">
-        <p class="fw-bold  fs-4 px-2 py-1 bg-light bg-opacity-50
+        <p class="fw-bold  fs-4 px-2 py-1 bg-dark text-white bg-opacity-50
                  rounded-pill border border-primary-subtle" id="temp"></p>
     </div>
 
@@ -51,42 +56,70 @@
     <!-- huge gap +/- 35% screen -->
     <div class="vh-gap"></div>
     <div class="d-flex align-items-center justify-content-center h-100">
-        <p class="fw-bold  fs-3 py-1 px-2 bg-light bg-opacity-50
+        <p class="fw-bold  fs-3 py-1 px-2 bg-dark text-white bg-opacity-50
                  rounded-pill border border-primary-subtle" id="clock"></p>
     </div>
 
 
     <div class=" w-75 mx-auto ">
-        <!-- ville actuelle / choisir une autre ville -->
-        <div class="d-flex justify-content-center my-3">
-            <input type="text" id="city-input" placeholder="ville" class="form-control mx-auto text-center  fw-bold w-50 bg-light bg-opacity-50
-             rounded-pill border border-primary-subtle">
+        <div class="d-flex justify-content-center align-items-center my-3">
+
+
+            <button class="btn border border-primary-subtle rounded-pill bg-dark text-white bg-opacity-50"
+                onclick="addFav()">
+                <i id="favIcon" class="bi bi-star"></i>
+            </button>
+            <!-- ville actuelle / choisir une autre ville -->
+
+            <form action="" onsubmit="weatherApp(); return false;">
+                <input type="text" id="city-input" placeholder="ville"
+                    class="form-control mx-auto text-center  fw-bold w-50 bg-dark text-white bg-opacity-50 rounded-pill border border-primary-subtle">
+            </form>
+
+
             <!-- </div> -->
             <!-- <div class="d-flex justify-content-center my-3"> -->
-            <button class="btn mx-auto bg-light fw-bold bg-light bg-opacity-50
-         rounded-pill border border-primary-subtle" onclick="weatherApp()">
+            <button
+                class="btn mx-auto bg-dark text-white fw-bold bg-dark text-white bg-opacity-50 rounded-pill border border-primary-subtle"
+                onclick="weatherApp()">
                 <i class="fw-bold fs-3 bi bi-caret-right-fill"></i>
             </button>
+
 
         </div>
     </div>
 
+    <!-- offcanvas  -->
+    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasExample"
+        aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Favoris</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class=" list-group list-group-flush">
+                <ul id="favoredCity"></ul>
+
+            </div>
+        </div>
+    </div>
 
     <div class="d-flex justify-content-between mx-auto  align-items-center w-75 my-4 ">
         <!-- precipitation -->
-        <div class="text-center blockD  bg-light bg-opacity-50
+        <div class="text-center blockD  bg-dark text-white bg-opacity-50
              rounded border border-primary-subtle">
             <p class="align-middle fw-bold py-2">Précipitation:</p>
             <p class="align-middle fw-bold " id="precip"></p>
         </div>
         <!-- humidité -->
-        <div class=" text-center blockD bg-light bg-opacity-50
+        <div class=" text-center blockD bg-dark text-white bg-opacity-50
              rounded border border-primary-subtle">
             <p class="align-middle fw-bold py-2">Humidité:</p>
             <p class="align-middle fw-bold" id="humid"></p>
         </div>
         <!-- vent -->
-        <div class="text-center blockD bg-light bg-opacity-50
+        <div class="text-center blockD bg-dark text-white bg-opacity-50
              rounded border border-primary-subtle">
             <p class="align-middle fw-bold py-2">Vent:</p>
             <p class="align-middle  fw-bold " id="vent"></p>
@@ -99,7 +132,8 @@
     <div class=" row my-4 mx-2">
 
         <div class="col-3">
-            <div class="blockF bg-light bg-opacity-50 rounded px-3 py-2 border border-primary-subtle text-center">
+            <div
+                class="blockF bg-dark text-white bg-opacity-50 rounded px-3 py-2 border border-primary-subtle text-center">
                 <p class="mb-0" id="time+1"></p>
                 <p class="mb-1" id="icon+1"></p>
                 <p class="mb-1 fw-bold" id="temp+1"></p>
@@ -107,7 +141,8 @@
         </div>
 
         <div class="col-3">
-            <div class="blockF bg-light bg-opacity-50 rounded px-3 py-2 border border-primary-subtle text-center">
+            <div
+                class="blockF bg-dark text-white bg-opacity-50 rounded px-3 py-2 border border-primary-subtle text-center">
                 <p class="mb-0" id="time+2"></p>
                 <p class="mb-1" id="icon+2"></p>
                 <p class="mb-1 fw-bold" id="temp+2"></p>
@@ -115,7 +150,8 @@
         </div>
 
         <div class="col-3">
-            <div class="blockF bg-light bg-opacity-50 rounded px-3 py-2 border border-primary-subtle text-center">
+            <div
+                class="blockF bg-dark text-white bg-opacity-50 rounded px-3 py-2 border border-primary-subtle text-center">
                 <p class="mb-0" id="timeDay+1"></p>
                 <p class="mb-1" id="iconDay+1"></p>
                 <p class="mb-1 fw-bold" id="tempDay+1"></p>
@@ -123,7 +159,8 @@
         </div>
 
         <div class="col-3">
-            <div class="blockF bg-light bg-opacity-50 rounded px-3 py-2 border border-primary-subtle text-center">
+            <div
+                class="blockF bg-dark text-white bg-opacity-50 rounded px-3 py-2 border border-primary-subtle text-center">
                 <p class="mb-0" id="timeDay+2"></p>
                 <p class="mb-1" id="iconDay+2"></p>
                 <p class="mb-1 fw-bold" id="tempDay+2"></p>
@@ -134,7 +171,7 @@
     <!-- soleil et heure -->
     <div class="row w-75 mx-auto ">
         <div class="col-6">
-            <div class="d-flex justify-content-between bg-light bg-opacity-50
+            <div class="d-flex justify-content-between bg-dark text-white bg-opacity-50
              rounded-pill px-3 py-2 mb-1 border border-primary-subtle">
                 <p class=" fw-bold m-0 d-flex align-items-center">
                     <i class="fs-2 bi bi-sunrise me-1"></i>
@@ -144,7 +181,7 @@
         </div>
 
         <div class="col-6">
-            <div class="d-flex justify-content-between bg-light bg-opacity-50
+            <div class="d-flex justify-content-between bg-dark text-white bg-opacity-50
              rounded-pill border border-primary-subtle px-3 py-2">
                 <p class=" fw-bold m-0 d-flex align-items-center">
                     <i class="fs-2 bi bi-sunset me-1"></i>
@@ -153,6 +190,7 @@
             </div>
         </div>
     </div>
+
 
 
     <!-- fin de row  -->
